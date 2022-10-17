@@ -44,7 +44,7 @@ public class Db {
         }
     }
 
-    public HashMap<String, Integer> CountFilesContainingWords() {
+    public HashMap<String, Integer> countFilesContainingWords() {
         var res = new HashMap<String, Integer>();
         for (String word : allWords) {
             res.put(word, (int) files.values().stream().filter(file -> file.hasWord(word)).count());
