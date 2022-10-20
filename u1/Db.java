@@ -8,14 +8,14 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class Db {
-    private final static double MIN_PROBABILITY = 0.05;
+    private final static double MIN_PROBABILITY = 0.0000001;
 
     public static class File {
         private Map<String, Double> words = new HashMap<>();
 
         File(String path) throws IOException {
             byte[] bytes = Files.readAllBytes(Paths.get(path));
-            for (String s : new String(bytes).split(" ")) {
+            for (String s : new String(bytes).split("[ \n]")) {
                 if (words.containsKey(s)) {
                     words.put(s, words.get(s) + 1);
                 } else {
@@ -58,7 +58,7 @@ public class Db {
 
     // P ( word | Emails ) == 0
     public boolean hasWord(String word) {
-        return allWords.contains(word);
+        return filesContainingWords.containsKey(word);
     }
 
     public java.util.Set<String> getAllWords() {

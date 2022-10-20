@@ -25,8 +25,7 @@ class SpamFilterTest {
     @ParameterizedTest
     @MethodSource
     void allSpam(Db.File file) {
-        var p = bayesFilter.spamProbability(file);
-        assertTrue(p >= 1);
+        assertTrue( bayesFilter.isSpam(file));
     }
 
     static Iterator<Db.File> allSpam() throws URISyntaxException, IOException {
@@ -37,8 +36,7 @@ class SpamFilterTest {
     @ParameterizedTest
     @MethodSource
     void allHam(Db.File file) {
-        var p = bayesFilter.spamProbability(file);
-        assertTrue(p <= 1);
+        assertFalse( bayesFilter.isSpam(file));
     }
 
     static Iterator<Db.File> allHam() throws URISyntaxException, IOException {
