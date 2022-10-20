@@ -8,10 +8,10 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class Db {
-    private final static double MIN_PROBABILITY = 0.5;
+    private final static double MIN_PROBABILITY = 0.05;
 
     public static class File {
-        private Map<String, Integer> words = new HashMap<>();
+        private Map<String, Double> words = new HashMap<>();
 
         File(String path) throws IOException {
             byte[] bytes = Files.readAllBytes(Paths.get(path));
@@ -19,7 +19,7 @@ public class Db {
                 if (words.containsKey(s)) {
                     words.put(s, words.get(s) + 1);
                 } else {
-                    words.put(s, 1);
+                    words.put(s, 1.);
                 }
             }
         }
@@ -35,7 +35,8 @@ public class Db {
 
     private Map<String, File> files = new HashMap<>();
     private java.util.Set<String> allWords = new HashSet<String>();
-    private Map<String, Integer> filesContainingWords = new HashMap<>();
+    // Double, as all words must be registered, even if not existing
+    private Map<String, Double> filesContainingWords = new HashMap<>();
 
     public Db(String folder) throws URISyntaxException, IOException {
         var abs = FileSystems.getDefault().getPath(folder).normalize().toAbsolutePath().toString();
@@ -47,7 +48,7 @@ public class Db {
 
         // How many files contain each word
         for (String word : allWords) {
-            filesContainingWords.put(word, (int) files.values().stream().filter(file -> file.hasWord(word)).count());
+            filesContainingWords.put(word, (double) files.values().stream().filter(file -> file.hasWord(word)).count());
         }
     }
 
@@ -60,6 +61,10 @@ public class Db {
         return allWords.contains(word);
     }
 
+    public java.util.Set<String> getAllWords() {
+        return allWords;
+    }
+
     // P ( Emails )
     public double getAllWordsSize() {
         return allWords.size();
@@ -69,5 +74,13 @@ public class Db {
     public double getWordFrequency(String word) {
         if (!filesContainingWords.containsKey(word)) return MIN_PROBABILITY;
         return ((double) filesContainingWords.get(word)) / files.size();
+    }
+
+    public void ensureAllWords(java.util.Set<String> otherWords) {
+        for (String otherWord : otherWords) {
+            if (!filesContainingWords.containsKey(otherWord)) {
+                filesContainingWords.put(otherWord, MIN_PROBABILITY);
+            }
+        }
     }
 }

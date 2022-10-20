@@ -14,6 +14,9 @@ public class SpamFilter {
         this.ham = new Db("./u1/ham");
         this.spamCal = new Db("./u1/spam_cal");
         this.hamCal = new Db("./u1/ham_cal");
+
+        this.spam.ensureAllWords(this.ham.getAllWords());
+        this.ham.ensureAllWords(this.spam.getAllWords());
     }
 
     public double spamProbability(Db.File file) {
@@ -21,13 +24,8 @@ public class SpamFilter {
         double pHam = ham.getAllWordsSize();
 
         for (String word : file.getAllWords()) {
-            // Ignore words which are not in the dbs
-            if(!spam.hasWord(word) && !ham.hasWord(word))continue;
             pSpam *= spam.getWordFrequency(word);
             pHam *= ham.getWordFrequency(word);
-            if(pHam==0){
-                System.out.println("heee");
-            }
         }
         return pSpam / pHam;
     }

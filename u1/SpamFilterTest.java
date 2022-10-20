@@ -30,7 +30,7 @@ class SpamFilterTest {
     }
 
     static Iterator<Db.File> allSpam() throws URISyntaxException, IOException {
-        var tests = new Db("u1/spam_test");
+        var tests = new Db("u1/spam_cal");
         return tests.allFiles().iterator();
     }
 
@@ -38,11 +38,11 @@ class SpamFilterTest {
     @MethodSource
     void allHam(Db.File file) {
         var p = bayesFilter.spamProbability(file);
-        assertTrue(p >= 1);
+        assertTrue(p <= 1);
     }
 
     static Iterator<Db.File> allHam() throws URISyntaxException, IOException {
-        var tests = new Db("u1/ham_test");
+        var tests = new Db("u1/ham_cal");
         return tests.allFiles().iterator();
     }
 }
