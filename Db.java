@@ -1,5 +1,3 @@
-package u1;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.FileSystems;
@@ -8,7 +6,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class Db {
-    private final static double MIN_PROBABILITY = 0.0000001;
+    public final static double MIN_PROBABILITY = 0.0000001;
 
     public static class File {
         private Map<String, Double> words = new HashMap<>();

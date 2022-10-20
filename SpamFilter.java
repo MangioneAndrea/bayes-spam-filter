@@ -1,5 +1,3 @@
-package u1;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -10,8 +8,8 @@ public class SpamFilter {
     private final Db ham;
 
     public SpamFilter() throws URISyntaxException, IOException {
-        this.spam = new Db("./u1/spam");
-        this.ham = new Db("./u1/ham");
+        this.spam = new Db("spam");
+        this.ham = new Db("ham");
 
         this.spam.ensureAllWords(this.ham.getAllWords());
         this.ham.ensureAllWords(this.spam.getAllWords());

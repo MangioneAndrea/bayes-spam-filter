@@ -1,10 +1,6 @@
-package u1;
-
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Iterator;
@@ -29,7 +25,7 @@ class SpamFilterTest {
     }
 
     static Iterator<Db.File> allSpam() throws URISyntaxException, IOException {
-        var tests = new Db("u1/spam_cal");
+        var tests = new Db("spam_cal");
         return tests.allFiles().iterator();
     }
 
@@ -40,7 +36,7 @@ class SpamFilterTest {
     }
 
     static Iterator<Db.File> allHam() throws URISyntaxException, IOException {
-        var tests = new Db("u1/ham_cal");
+        var tests = new Db("ham_cal");
         return tests.allFiles().iterator();
     }
 }
