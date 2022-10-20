@@ -21,8 +21,13 @@ public class SpamFilter {
         double pHam = ham.getAllWordsSize();
 
         for (String word : file.getAllWords()) {
+            // Ignore words which are not in the dbs
+            if(!spam.hasWord(word) && !ham.hasWord(word))continue;
             pSpam *= spam.getWordFrequency(word);
             pHam *= ham.getWordFrequency(word);
+            if(pHam==0){
+                System.out.println("heee");
+            }
         }
         return pSpam / pHam;
     }

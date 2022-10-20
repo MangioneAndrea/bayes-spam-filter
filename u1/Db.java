@@ -8,9 +8,9 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class Db {
-    private final static double MIN_PROBABILITY = 0.01;
+    private final static double MIN_PROBABILITY = 0.5;
 
-    public class File {
+    public static class File {
         private Map<String, Integer> words = new HashMap<>();
 
         File(String path) throws IOException {
@@ -49,6 +49,15 @@ public class Db {
         for (String word : allWords) {
             filesContainingWords.put(word, (int) files.values().stream().filter(file -> file.hasWord(word)).count());
         }
+    }
+
+    public Collection<File> allFiles() {
+        return files.values();
+    }
+
+    // P ( word | Emails ) == 0
+    public boolean hasWord(String word) {
+        return allWords.contains(word);
     }
 
     // P ( Emails )
