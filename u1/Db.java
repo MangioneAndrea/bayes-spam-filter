@@ -8,8 +8,9 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class Db {
+    private final static double MIN_PROBABILITY = 0.01;
 
-    private class File {
+    public class File {
         private Map<String, Integer> words = new HashMap<>();
 
         File(String path) throws IOException {
@@ -34,6 +35,7 @@ public class Db {
 
     private Map<String, File> files = new HashMap<>();
     private java.util.Set<String> allWords = new HashSet<String>();
+    private Map<String, Integer> filesContainingWords = new HashMap<>();
 
     public Db(String folder) throws URISyntaxException, IOException {
         var abs = FileSystems.getDefault().getPath(folder).normalize().toAbsolutePath().toString();
@@ -42,13 +44,21 @@ public class Db {
             files.put(file.getName(), f);
             allWords.addAll(f.getAllWords());
         }
+
+        // How many files contain each word
+        for (String word : allWords) {
+            filesContainingWords.put(word, (int) files.values().stream().filter(file -> file.hasWord(word)).count());
+        }
     }
 
-    public HashMap<String, Integer> countFilesContainingWords() {
-        var res = new HashMap<String, Integer>();
-        for (String word : allWords) {
-            res.put(word, (int) files.values().stream().filter(file -> file.hasWord(word)).count());
-        }
-        return res;
+    // P ( Emails )
+    public double getAllWordsSize() {
+        return allWords.size();
+    }
+
+    // P ( Emails with word | Emails )
+    public double getWordFrequency(String word) {
+        if (!filesContainingWords.containsKey(word)) return MIN_PROBABILITY;
+        return ((double) filesContainingWords.get(word)) / files.size();
     }
 }
