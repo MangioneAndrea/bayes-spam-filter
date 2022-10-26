@@ -1,4 +1,4 @@
-*.java linguist-vendored
+* linguist-vendored
 ham/* linguist-detectable=false
 ham_cal/* linguist-detectable=false
 ham_test/* linguist-detectable=false
