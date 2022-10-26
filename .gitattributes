@@ -1,7 +1,1 @@
-* linguist-vendored
-ham/* linguist-detectable=false
-ham_cal/* linguist-detectable=false
-ham_test/* linguist-detectable=false
-spam/* linguist-detectable=false
-spam_cal/* linguist-detectable=false
-spam_test/* linguist-detectable=false
+* linguist-language=java
