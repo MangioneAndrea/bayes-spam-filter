@@ -1,3 +1,4 @@
+* linguist-vendored
 ham/* linguist-vendored=false
 ham_cal/* linguist-vendored=false
 ham_test/* linguist-vendored=false
